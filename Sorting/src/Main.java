@@ -42,26 +42,26 @@ public class Main {
             Scanner read = new Scanner(System.in);
             File myFile = new File(fileName);
 
-            //Creating and writing into file random variables
-            System.out.println("\nGenerating an array of size " + args[0] + "..");
-            int[] data = arrayGenerator(arrayLength, 100);
-
+            //writing into new file.
             if (myFile.createNewFile())
-                System.out.println("New file was created successfully.");
-            else
-                System.out.println("File was overwritten.");
+            {
+                //Creating and writing into file random variables
+                System.out.println("\nGenerating an array of size " + args[0] + "..");
+                int[] data = arrayGenerator(arrayLength, 100);
 
-            try {
-                FileWriter writer = new FileWriter(fileName);
+                try {
+                    FileWriter writer = new FileWriter(fileName);
 
-                for (int i = 0; i < data.length; i++) {
-                    writer.write(data[i] + " ");
+                    for (int i = 0; i < data.length; i++) {
+                        writer.write(data[i] + " ");
+                    }
+                    writer.close();
+                    System.out.println("New file was created successfully.");
                 }
-                writer.close();
-            }
-            catch (IOException e) {
-                System.out.println("Error while trying to write in file.");
-                e.printStackTrace();
+                catch (IOException e) {
+                    System.out.println("Error while trying to write in file.");
+                    e.printStackTrace();
+                }
             }
 
             //A menu for implementing different sorts.
@@ -87,14 +87,14 @@ public class Main {
                         break;
                     }
                     catch (Exception e) {
-                        System.err.println("Please, provide an integer!");
+                        System.err.println("Please, provide an integer from the menu!");
                     }
                 }
                 if (input == 0)
                     System.exit(0);
                 else if (!(input >= 0 && input <= NUMOFOPTIONS))
                 {
-                    System.err.println("The integer must be chosen within provided options!");
+                    System.err.println("The integer was not chosen within provided options, goodbye!");
                     break;
                 }
 
@@ -134,7 +134,7 @@ public class Main {
         try
         {
             Scanner scanner = new Scanner(myFile);
-            System.out.println("Loading file " + fileName + "...");
+            System.out.println("\nLoading file " + fileName + "..");
 
             while (scanner.hasNextLine())
             {
@@ -149,6 +149,7 @@ public class Main {
         }
         catch (IOException e)
         {
+            System.out.println("An error occurred while loading a file.");
             e.printStackTrace();
         }
         return array;
