@@ -9,42 +9,47 @@ import java.util.concurrent.TimeUnit;
 /*
 * Author: Aliaksandr Hladkou
 *
-* Program to check performance of sorting algorithms. Requires parameter to indicate the number of elements to be sorted.
+* Program to check the performance of sorting algorithms in seconds.
+* Requires parameter to indicate the number of elements to be sorted.
 * This class also creates a new file with randomly generated numbers every time when initialized.
 * It is recommended to use arguments of at least 100,000 to see the performance.
 *
+* @param args
 * */
 
 public class Main {
     private final static int NUMOFOPTIONS = 4;
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         if (args.length < 1)
             throw new RuntimeException("No arguments provided.");
         else
         {
             //Variables within else scope
+            int arrayLength;
+            try {
+                arrayLength = Integer.parseInt(args[0]);
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("An integer must be provided.");
+                return;
+            }
             boolean repeat = true;
-            int arrayLength = Integer.parseInt(args[0]);
             String fileName = Integer.toString(arrayLength) + ".txt";
             long startTime;
             long endTime;
-            StringTokenizer st;
             Scanner read = new Scanner(System.in);
             File myFile = new File(fileName);
 
             //Creating and writing into file random variables
-            System.out.println("Generating an array of size " + args[0] + "..");
+            System.out.println("\nGenerating an array of size " + args[0] + "..");
             int[] data = arrayGenerator(arrayLength, 100);
 
-            try {
-                if (myFile.createNewFile())
-                    System.out.println("New file was created successfully.");
-            }
-            catch (IOException e) {
-                System.out.println("File was not created.");
-                e.printStackTrace();
-            }
+            if (myFile.createNewFile())
+                System.out.println("New file was created successfully.");
+            else
+                System.out.println("File was overwritten.");
 
             try {
                 FileWriter writer = new FileWriter(fileName);
@@ -65,7 +70,7 @@ public class Main {
                 //Load file into array
                 int[] array = loadFile(arrayLength, fileName, myFile);
 
-                System.out.println("Indicate the sorting algorithm with a number or press 0 for exit:\n" +
+                System.out.println("\nIndicate the sorting algorithm with a number or press 0 for exit:\n" +
                         "0: Exit \n" +
                         "1: Bubble \n" +
                         "2: Insertion \n" +
