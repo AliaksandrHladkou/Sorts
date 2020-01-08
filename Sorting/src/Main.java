@@ -11,11 +11,12 @@ import java.util.concurrent.TimeUnit;
 *
 * Program to check performance of sorting algorithms. Requires parameter to indicate the number of elements to be sorted.
 * This class also creates a new file with randomly generated numbers every time when initialized.
+* It is recommended to use arguments of at least 100,000 to see the performance.
 *
 * */
 
 public class Main {
-    private final static int NUMOFOPTIONS = 3;
+    private final static int NUMOFOPTIONS = 4;
     public static void main(String[] args)
     {
         if (args.length < 1)
@@ -68,7 +69,8 @@ public class Main {
                         "0: Exit \n" +
                         "1: Bubble \n" +
                         "2: Insertion \n" +
-                        "3: Selection");
+                        "3: Selection \n" +
+                        "4: Merge");
 
                 Sorts sorts = new Sorts();
                 int input;
@@ -96,20 +98,23 @@ public class Main {
                 {
                     case 1:
                         System.out.println("Performing Bubble sort..");
-                        sorts.bubble(array);
+                        sorts.bubbleSort(array);
                         break;
                     case 2:
                         System.out.println("Performing Insertion sort..");
-                        sorts.insertion(array);
+                        sorts.insertionSort(array);
                         break;
                     case 3:
                         System.out.println("Performing Selection sort..");
-                        sorts.selection(array);
+                        sorts.selectionSort(array);
+                    case 4:
+                        System.out.println("Performing Merge sort..");
+                        sorts.mergeSort(array, 0, arrayLength-1);
                     default: break;
                 }
                 endTime = System.nanoTime();
 
-                printArr(array);
+                //printArr(array);
                 System.out.println("\nTime took: " + TimeUnit.SECONDS.convert((endTime - startTime), TimeUnit.NANOSECONDS) + " seconds.");
 
                 repeat = isRepeat(read);
