@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 *
 * Program to check the performance of sorting algorithms in seconds.
 * Requires parameter to indicate the number of elements to be sorted.
-* This class also creates a new file with randomly generated numbers every time when initialized.
+* This class also creates a new file with randomly generated numbers if it doesn't find an existing one
 * It is recommended to use arguments of at least 100,000 to see the performance.
 *
 * @param args
@@ -42,26 +42,14 @@ public class Main {
             Scanner read = new Scanner(System.in);
             File myFile = new File(fileName);
 
-            //writing into new file.
+            //writing into new file if it does not exist.
             if (myFile.createNewFile())
             {
                 //Creating and writing into file random variables
                 System.out.println("\nGenerating an array of size " + args[0] + "..");
                 int[] data = arrayGenerator(arrayLength, 100);
 
-                try {
-                    FileWriter writer = new FileWriter(fileName);
-
-                    for (int i = 0; i < data.length; i++) {
-                        writer.write(data[i] + " ");
-                    }
-                    writer.close();
-                    System.out.println("New file was created successfully.");
-                }
-                catch (IOException e) {
-                    System.out.println("Error while trying to write in file.");
-                    e.printStackTrace();
-                }
+                writeData(data, fileName);
             }
 
             //A menu for implementing different sorts.
@@ -118,12 +106,38 @@ public class Main {
                     default: break;
                 }
                 endTime = System.nanoTime();
-
-                //printArr(array);
                 System.out.println("\nTime took: " + TimeUnit.SECONDS.convert((endTime - startTime), TimeUnit.NANOSECONDS) + " seconds.");
 
+                saveSortedData(array, fileName, read);
                 repeat = isRepeat(read);
             }
+        }
+    }
+
+    private static void saveSortedData(int[] data, String fileName, Scanner read)
+    {
+        System.out.println("Would you like to save file with sorted data? ('Y' for yes!)");
+        String answer = read.nextLine();
+
+        if (answer.toLowerCase().equals("y"))
+            writeData(data, ("Sorted_" + fileName));
+    }
+
+    private static void writeData(int[] data, String fileName)
+    {
+        try {
+            FileWriter writer = new FileWriter(new File(fileName));
+
+            for (int i = 0; i < data.length; i++) {
+                writer.write(data[i] + " ");
+            }
+            writer.close();
+            System.out.println("New file with data was created successfully.");
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error while trying to write in file.");
+            e.printStackTrace();
         }
     }
 
@@ -158,7 +172,7 @@ public class Main {
     private static boolean isRepeat(Scanner read)
     {
         boolean repeat;
-        System.out.println("Enter 'Y' to repeat or any other key for exit.");
+        System.out.println("\nEnter 'Y' to repeat or any other key for exit.");
         String yesNo = read.nextLine();
         if (yesNo.toLowerCase().equals("y"))
             repeat = true;

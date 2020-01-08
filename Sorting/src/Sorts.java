@@ -1,7 +1,7 @@
 /*
 * Aliaksandr Hladkou
 *
-* Class of sorting algorithms
+* Class with sorting algorithms
 * */
 
 public class Sorts {
