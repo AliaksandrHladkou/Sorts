@@ -14,7 +14,6 @@ public class Sorts {
         mergeSort(data, left, mid);
         mergeSort(data, mid+1, right);
         merge(data, left, right, mid);
-        //merge1(data, left, mid, right);
     }
 
     //Bubble sort
