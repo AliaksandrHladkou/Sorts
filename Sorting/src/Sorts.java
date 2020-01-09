@@ -6,7 +6,17 @@
 
 public class Sorts {
 
-    //Merge Sort
+    //Quick sort
+    public void quickSort(int[] data, int start, int end)
+    {
+        if (end <= start) return;
+
+        int pivot = partition(data, start, end);
+        quickSort(data, start, pivot-1);
+        quickSort(data, pivot+1, end);
+    }
+
+    //Merge sort
     public void mergeSort(int[] data, int left, int right)
     {
         if (right <= left) return;
@@ -66,6 +76,29 @@ public class Sorts {
             data[minIndex] = data[i];
             data[i] = temp;
         }
+    }
+
+    private int partition(int[] data, int start, int end)
+    {
+        int pivot = end;
+        int counter = start;
+
+        for (int i = start; i < end; i++)
+        {
+            if (data[i] < data[pivot])
+            {
+                int temp = data[counter];
+                data[counter] = data[i];
+                data[i] = temp;
+                counter++;
+            }
+        }
+
+        int temp = data[pivot];
+        data[pivot] = data[counter];
+        data[counter] = temp;
+
+        return counter;
     }
 
     //merging sorted elements of array

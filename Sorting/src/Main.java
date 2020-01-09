@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 * */
 
 public class Main {
-    private final static int NUMOFOPTIONS = 4;
+    private final static int NUMOFOPTIONS = 5;
     public static void main(String[] args) throws IOException
     {
         if (args.length < 1)
@@ -63,7 +63,8 @@ public class Main {
                         "1: Bubble \n" +
                         "2: Insertion \n" +
                         "3: Selection \n" +
-                        "4: Merge");
+                        "4: Merge \n" +
+                        "5: Quick");
 
                 Sorts sorts = new Sorts();
                 int input;
@@ -103,6 +104,9 @@ public class Main {
                     case 4:
                         System.out.println("Performing Merge sort..");
                         sorts.mergeSort(array, 0, arrayLength-1);
+                    case 5:
+                        System.out.println("Performing Quick sort..");
+                        sorts.quickSort(array, 0, arrayLength-1);
                     default: break;
                 }
                 endTime = System.nanoTime();
